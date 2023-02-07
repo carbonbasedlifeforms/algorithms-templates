@@ -1,5 +1,5 @@
 # 11 спринт, задача: Ловкость рук
-# id: 81975881
+# id: 81925481
 from collections import Counter
 from typing import Tuple
 
