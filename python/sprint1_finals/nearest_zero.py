@@ -1,26 +1,26 @@
 # 11 спринт, задача: Ближайший ноль
-# id: 81919290
+# id: 81971250
 
 from typing import List, Tuple
 
 def nearest_zero(elements_qty: int, input_struct: List[int]) -> List[int]:
-    result = [0] * elements_qty
-    zero_idx = []
+    distances = [0] * elements_qty
+    empty_sites = []
 
     for idx, value in enumerate(input_struct):
         if value == 0:
-            zero_idx.append(idx)
+            empty_sites.append(idx)
 
-    for i in range(zero_idx[0]):
-        result[i] = zero_idx[0] - i
+    for idx in range(empty_sites[0]):
+        distances[idx] = empty_sites[0] - idx
 
-    for i in range(zero_idx[-1] + 1, elements_qty):
-        result[i] = i - zero_idx[-1]
+    for idx in range(empty_sites[-1] + 1, elements_qty):
+        distances[idx] = idx - empty_sites[-1]
 
-    for n in range(len(zero_idx)-1):
-        for i in range(zero_idx[n] + 1, zero_idx[n + 1]):
-            result[i] = min(i - zero_idx[n], zero_idx[n + 1] - i)
-    return result
+    for znum in range(len(empty_sites)-1):
+        for idx in range(empty_sites[znum] + 1, empty_sites[znum + 1]):
+            distances[idx] = min(idx - empty_sites[znum], empty_sites[znum + 1] - idx)
+    return distances
 
 def read_input() -> Tuple[int, List[int]]:
     elements_qty = int(input())
