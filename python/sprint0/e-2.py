@@ -1,11 +1,7 @@
 from typing import List, Tuple, Optional
 
 def two_sum(arr: List[int], target_sum: int) -> Optional[Tuple[int, int]]:
-    for i in range(0, len(arr)):
-        for j in range(i+1, len(arr)):
-            if arr[i] + arr[j] == target_sum:
-                return arr[i], arr[j]
-    return None
+    return None, None
 
 def read_input() -> Tuple[List[int], int]:
     n = int(input())

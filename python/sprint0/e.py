@@ -1,8 +1,14 @@
 from typing import List, Tuple, Optional
 
 def two_sum(arr: List[int], target_sum: int) -> Optional[Tuple[int, int]]:
-    # Здесь реализация вашего решения
-    pass
+    prev = set()
+    for n in arr:
+        p = target_sum - n
+        if p in prev:
+            return n, p
+        else:
+            prev.add(n)
+    return None
 
 def read_input() -> Tuple[List[int], int]:
     n = int(input())

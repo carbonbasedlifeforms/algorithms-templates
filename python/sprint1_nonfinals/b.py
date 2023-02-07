@@ -1,6 +1,10 @@
+def is_odd(num: int) -> int:
+    if num % 2 == 0:
+        return 1
+    return 2
+
 def check_parity(a: int, b: int, c: int) -> bool:
-    # Здесь реализация вашего решения
-    pass
+    return is_odd(a) == is_odd(b) == is_odd(c)
 
 def print_result(result: bool) -> None:
     if result:
