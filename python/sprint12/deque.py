@@ -19,8 +19,11 @@ class Deque:
             self.head_idx = 0
             self.tail_idx = 0
 
+    def is_filled(self) -> bool:
+        return self.size == self.max_length
+
     def push_front(self, value: int) -> None:
-        if self.size == self.max_length:
+        if self.is_filled():
             raise IndexError('error')
         if self.is_empty():
             self.tail_idx += 1
@@ -29,14 +32,13 @@ class Deque:
         self.size += 1
 
     def push_back(self, value: int) -> None:
-        if self.size < self.max_length:
-            if self.is_empty():
-                self.head_idx = self.max_length - 1
-            self.deque[self.tail_idx] = value
-            self.tail_idx = (self.tail_idx + 1) % self.max_length
-            self.size += 1
-        else:
+        if self.is_filled():
             raise IndexError('error')
+        if self.is_empty():
+            self.head_idx = self.max_length - 1
+        self.deque[self.tail_idx] = value
+        self.tail_idx = (self.tail_idx + 1) % self.max_length
+        self.size += 1
 
     def pop_front(self) -> int:
         if self.is_empty():
@@ -67,9 +69,8 @@ if __name__ == '__main__':
         cmd, *param = input().split()
         try:
             func = getattr(deque, cmd)
-            if param:
-                func(*param)
-            else:
-                print(func(*param))
+            answer = func(*param)
+            if answer:
+                print(answer)
         except (IndexError, IOError):
             print('error')

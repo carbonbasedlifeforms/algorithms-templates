@@ -1,51 +1,44 @@
 # 12 sprint, Калькулятор
-# id: 82657057
+# id: 82711514
 from operator import add, floordiv, mul, sub
+from typing import List, Dict
 
 
-OPERATORS = {
-    '+': add,
-    '-': sub,
-    '*': mul,
-    '/': floordiv
-}
-
-
-class Calculation:
+class Stack:
     def __init__(self):
         self.result = []
 
-    def is_number(self, element: str) -> bool:
-        try:
-            float(element)
-            return True
-        except ValueError:
-            return False
-
-    def push(self, value):
+    def push(self, value: str):
         self.result.append(value)
 
     def pop(self):
-        try:
-            return self.result.pop()
-        except IndexError:
-            return
+        if self.result == []:
+            raise IndexError()
+        return self.result.pop()
 
 
-def rpn_calculator():
-    expr = input().split()
-    characters = Calculation()
-
-    for element in expr:
-        if characters.is_number(element):
-            characters.push(int(element))
-        else:
-            operand1, operand2 = characters.pop(), characters.pop()
-            atom_calc = OPERATORS[element](operand2, operand1)
-            characters.push(atom_calc)
-
-    print(characters.pop())
+def rpn_calculator(expr: List, operators: Dict) -> int:
+    characters = Stack()
+    try:
+        for element in expr:
+            if element in operators:
+                operand1, operand2 = characters.pop(), characters.pop()
+                atom_calc = operators[element](operand2, operand1)
+                characters.push(atom_calc)
+            else:
+                characters.push(int(element))
+        print(characters.pop())
+    except IndexError:
+        pass
 
 
 if __name__ == '__main__':
-    rpn_calculator()
+
+    OPERATORS = {
+        '+': add,
+        '-': sub,
+        '*': mul,
+        '/': floordiv
+    }
+    expr = input().split()
+    rpn_calculator(expr, OPERATORS)
