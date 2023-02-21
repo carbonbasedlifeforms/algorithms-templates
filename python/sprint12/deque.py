@@ -14,28 +14,19 @@ class Deque:
     def is_empty(self) -> bool:
         return self.size == 0
 
-    def zeroing_indexes(self) -> None:
-        if self.is_empty():
-            self.head_idx = 0
-            self.tail_idx = 0
-
     def is_filled(self) -> bool:
         return self.size == self.max_length
 
     def push_front(self, value: int) -> None:
         if self.is_filled():
             raise IndexError('error')
-        if self.is_empty():
-            self.tail_idx += 1
-        self.deque[self.head_idx] = value
+        self.deque[self.head_idx - 1] = value
         self.head_idx = (self.head_idx - 1) % self.max_length
         self.size += 1
 
     def push_back(self, value: int) -> None:
         if self.is_filled():
             raise IndexError('error')
-        if self.is_empty():
-            self.head_idx = self.max_length - 1
         self.deque[self.tail_idx] = value
         self.tail_idx = (self.tail_idx + 1) % self.max_length
         self.size += 1
@@ -43,21 +34,19 @@ class Deque:
     def pop_front(self) -> int:
         if self.is_empty():
             raise IOError('error')
-        self.head_idx = (self.head_idx + 1) % self.max_length
         pop_value = self.deque[self.head_idx]
         self.deque[self.head_idx] = None
+        self.head_idx = (self.head_idx + 1) % self.max_length
         self.size -= 1
-        self.zeroing_indexes()
         return pop_value
 
     def pop_back(self) -> int:
         if self.is_empty():
             raise IOError('error')
+        pop_value = self.deque[self.tail_idx - 1]
+        self.deque[self.tail_idx - 1] = None
         self.tail_idx = (self.tail_idx - 1) % self.max_length
-        pop_value = self.deque[self.tail_idx]
-        self.deque[self.tail_idx] = None
         self.size -= 1
-        self.zeroing_indexes()
         return pop_value
 
 
