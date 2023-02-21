@@ -1,5 +1,5 @@
 # 12 sprint, Дек
-# id: 82656997
+# id: 82716468
 from typing import List
 
 
@@ -17,18 +17,21 @@ class Deque:
     def is_filled(self) -> bool:
         return self.size == self.max_length
 
+    def calc_idx(self, idx: int, increment: int) -> int:
+        return (idx + increment) % self.max_length
+
     def push_front(self, value: int) -> None:
         if self.is_filled():
             raise IndexError('error')
         self.deque[self.head_idx - 1] = value
-        self.head_idx = (self.head_idx - 1) % self.max_length
+        self.head_idx = self.calc_idx(self.head_idx, -1)
         self.size += 1
 
     def push_back(self, value: int) -> None:
         if self.is_filled():
             raise IndexError('error')
         self.deque[self.tail_idx] = value
-        self.tail_idx = (self.tail_idx + 1) % self.max_length
+        self.tail_idx = self.calc_idx(self.tail_idx, 1)
         self.size += 1
 
     def pop_front(self) -> int:
@@ -36,7 +39,7 @@ class Deque:
             raise IOError('error')
         pop_value = self.deque[self.head_idx]
         self.deque[self.head_idx] = None
-        self.head_idx = (self.head_idx + 1) % self.max_length
+        self.head_idx = self.calc_idx(self.head_idx, 1)
         self.size -= 1
         return pop_value
 
@@ -45,7 +48,7 @@ class Deque:
             raise IOError('error')
         pop_value = self.deque[self.tail_idx - 1]
         self.deque[self.tail_idx - 1] = None
-        self.tail_idx = (self.tail_idx - 1) % self.max_length
+        self.tail_idx = self.calc_idx(self.tail_idx, -1)
         self.size -= 1
         return pop_value
 
