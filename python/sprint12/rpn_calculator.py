@@ -4,6 +4,10 @@ from operator import add, floordiv, mul, sub
 from typing import List, Dict
 
 
+class EmptyStackException(Exception):
+    pass
+
+
 class Stack:
     def __init__(self):
         self.result = []
@@ -13,11 +17,11 @@ class Stack:
 
     def pop(self):
         if not self.result:
-            exit(0)
+            raise EmptyStackException
         return self.result.pop()
 
 
-def rpn_calculator(expr: List[str], operators: Dict[str, str]) -> int:
+def rpn_calculator(expr: List[str], operators: Dict[str, callable]) -> int:
     characters = Stack()
     for element in expr:
         if element in operators:
@@ -26,7 +30,7 @@ def rpn_calculator(expr: List[str], operators: Dict[str, str]) -> int:
             characters.push(atom_calc)
         else:
             characters.push(int(element))
-    print(characters.pop())
+    return characters.pop()
 
 
 if __name__ == '__main__':
@@ -38,4 +42,4 @@ if __name__ == '__main__':
         '/': floordiv
     }
     expr = input().split()
-    rpn_calculator(expr, OPERATORS)
+    print(rpn_calculator(expr, OPERATORS))
