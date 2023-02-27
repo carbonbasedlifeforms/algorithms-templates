@@ -1,7 +1,7 @@
 # 12 sprint, Калькулятор
-# id: 82764129
+# id: 82897907
 from operator import add, floordiv, mul, sub
-from typing import List, Dict
+from typing import List, Dict, Callable
 
 
 class EmptyStackException(Exception):
@@ -21,7 +21,7 @@ class Stack:
         return self.result.pop()
 
 
-def rpn_calculator(expr: List[str], operators: Dict[str, callable]) -> int:
+def rpn_calculator(expr: List[str], operators: Dict[str, Callable]) -> int:
     characters = Stack()
     for element in expr:
         if element in operators:
@@ -35,7 +35,7 @@ def rpn_calculator(expr: List[str], operators: Dict[str, callable]) -> int:
 
 if __name__ == '__main__':
 
-    OPERATORS = {
+    OPERATORS: Dict[str, Callable] = {
         '+': add,
         '-': sub,
         '*': mul,
